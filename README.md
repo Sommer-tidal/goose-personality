@@ -11,15 +11,17 @@ There are two ways to install this extension:
 1. Open Goose
 2. Go to Settings → Extensions
 3. Click "Add Custom Extension"
-4. Fill in:
+4. Fill in these fields EXACTLY as shown (copy and paste recommended):
    - Type: Standard IO
    - ID: `personality-customizer`
    - Name: `Personality Customizer`
    - Description: `Customize Goose's personality and response style`
    - Command: `python3`
-   - Arguments: `-c "import urllib.request; exec(urllib.request.urlopen('https://raw.githubusercontent.com/Sommer-tidal/goose-personality/main/src/main.py').read().decode())"`
+   - Arguments: `-c import urllib.request; exec(urllib.request.urlopen('https://raw.githubusercontent.com/Sommer-tidal/goose-personality/main/src/main.py').read().decode())`
    - Environment Variables: (leave empty)
    - Timeout: 300
+
+IMPORTANT: Do not add any extra quotes around the Arguments field. Copy and paste it exactly as shown above.
 
 ### Method 2: Local Repository
 
@@ -42,5 +44,27 @@ git clone https://github.com/Sommer-tidal/goose-personality.git
    - Arguments: `~/goose-personality/src/main.py`
    - Environment Variables: (leave empty)
    - Timeout: 300
+
+## Troubleshooting
+
+### Common Installation Issues
+
+1. **Syntax Error or Quote Issues**
+   - Make sure you copy the Arguments field exactly as shown
+   - Do not add any extra quotes
+   - Do not modify the command string
+
+2. **Python Not Found**
+   - Ensure Python 3 is installed on your system
+   - Try using the full path: `/usr/bin/python3` in the Command field
+
+3. **Connection Issues**
+   - Verify you can access GitHub
+   - Check your internet connection
+   - Make sure you can access raw.githubusercontent.com
+
+4. **Permission Issues**
+   - Try Method 2 (Local Repository) if you have permission issues
+   - Make sure Python has network access
 
 [Rest of README remains the same...]
