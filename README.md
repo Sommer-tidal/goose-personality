@@ -4,7 +4,7 @@ A customizable extension for modifying Goose's personality and response style. T
 
 ## Installation
 
-There are two ways to install this extension:
+There are three ways to install this extension:
 
 ### Method 1: Direct Installation (Recommended)
 
@@ -16,12 +16,26 @@ There are two ways to install this extension:
    - ID: `personality-customizer`
    - Name: `Personality Customizer`
    - Description: `Customize Goose's personality and response style`
-   - Command: `sh`
-   - Arguments: `-c "curl -s https://raw.githubusercontent.com/Sommer-tidal/goose-personality/main/src/main.py > /tmp/goose_personality.py && python3 /tmp/goose_personality.py"`
+   - Command: `/bin/bash`
+   - Arguments: `-c "wget -qO- https://raw.githubusercontent.com/Sommer-tidal/goose-personality/main/src/main.py | python3"`
    - Environment Variables: (leave empty)
    - Timeout: 300
 
-### Method 2: Local Repository
+### Method 2: Alternative Direct Installation
+
+If Method 1 doesn't work, try these settings:
+   - Type: Standard IO
+   - ID: `personality-customizer`
+   - Name: `Personality Customizer`
+   - Description: `Customize Goose's personality and response style`
+   - Command: `sh`
+   - Arguments: `-c curl -s https://raw.githubusercontent.com/Sommer-tidal/goose-personality/main/src/main.py > /tmp/goose_personality.py && python3 /tmp/goose_personality.py`
+   - Environment Variables: (leave empty)
+   - Timeout: 300
+
+### Method 3: Local Repository
+
+If the above methods don't work, you can install locally:
 
 1. Clone the repository:
 ```bash
