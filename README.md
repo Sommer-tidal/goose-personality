@@ -1,6 +1,6 @@
 # Goose Personality Extension
 
-A customizable extension for modifying Goose's personality and response style. This extension allows you to switch between predefined styles or create your own custom personality styles through a web interface.
+A simple extension for customizing Goose's personality and response style.
 
 ## Installation
 
@@ -19,13 +19,13 @@ git clone https://github.com/Sommer-tidal/goose-personality.git
      - Name: `Personality Customizer`
      - Description: `Customize Goose's personality and response style`
      - Command: `/Library/Developer/CommandLineTools/usr/bin/python3`
-     - Arguments: `/Users/YOURUSERNAME/goose-personality/src/main.py`
+     - Arguments: `/Users/YOURUSERNAME/goose-personality/src/main.py --init`
      - Environment Variables: (leave empty)
      - Timeout: 30
 
    **Important**: Replace `YOURUSERNAME` with your actual username.
    For example, if your username is "john", the Arguments field would be:
-   `/Users/john/goose-personality/src/main.py`
+   `/Users/john/goose-personality/src/main.py --init`
 
 ## Available Commands
 
@@ -33,7 +33,7 @@ git clone https://github.com/Sommer-tidal/goose-personality.git
 ```
 get_personality_styles
 ```
-Lists all available personality styles (both built-in and custom).
+Lists all available personality styles.
 
 ### 2. Set a Style
 ```
@@ -44,67 +44,13 @@ Changes Goose's personality to the specified style. For example:
 set_style professional
 ```
 
-### 3. Customize Personality
-```
-customize_personality
-```
-Opens a web interface where you can:
-- Create new personality styles
-- Add custom instructions
-- View existing styles
-
 ## Built-in Styles
 
-1. **friendly**
-   - Warm, conversational tone
-   - Occasional emojis
-   - Simple explanations
-   - Everyday examples
-
-2. **professional**
-   - Formal language
-   - Precise and accurate
-   - Structured with headers
-   - Technical details included
-
-3. **teacher**
-   - Step-by-step explanations
-   - Uses analogies
-   - Interactive with checking questions
-   - Lots of examples
-
-4. **concise**
-   - Brief and to-the-point
-   - Bullet points
-   - Key information only
-   - Minimal examples
-
-## Features
-
-- **Style Persistence**: Your style preferences are saved using Goose's memory extension
-- **Custom Styles**: Create and save your own personality styles
-- **Web Interface**: Easy-to-use configuration interface for creating styles
-- **Multiple Styles**: Switch between different styles as needed
-
-## Creating Custom Styles
-
-1. Run `customize_personality` to open the configuration interface
-2. Enter a name for your new style
-3. Add instructions that define the style
-4. Click "Save Style"
-5. Use `set_style [your-style-name]` to activate it
-
-## Integration with Memory Extension
-
-The extension automatically saves your style preferences using Goose's memory extension. This means your preferred style persists across conversations.
-
-## Performance
-
-This extension has minimal performance impact:
-- Low memory usage (< 1MB for style storage)
-- No background processes
-- Configuration interface only runs when explicitly called
-- Styles are loaded only when needed
+Currently supports four basic styles:
+1. **friendly** - Casual and warm communication
+2. **professional** - Formal and precise communication
+3. **teacher** - Educational and explanatory approach
+4. **concise** - Brief and to-the-point responses
 
 ## Troubleshooting
 
@@ -130,13 +76,24 @@ This extension has minimal performance impact:
    - Should show read permissions (r) for your user
    - Try running: `chmod +r ~/goose-personality/src/main.py`
 
+5. **Initialization Issues**
+   - Make sure to include the `--init` flag in the Arguments field
+   - If you get timeout errors, try removing and adding the extension again
+
+## Current Status
+
+This is a simplified version of the extension focusing on basic functionality. Future updates will add:
+- Custom style creation
+- Web interface for configuration
+- Style persistence
+- More detailed personality customization
+
 ## Contributing
 
 Feel free to contribute by:
-1. Creating and sharing custom styles
+1. Testing and reporting issues
 2. Suggesting improvements
-3. Reporting issues
-4. Submitting pull requests
+3. Submitting pull requests
 
 ## License
 
