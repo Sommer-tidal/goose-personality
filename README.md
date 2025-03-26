@@ -21,11 +21,22 @@ chmod +x goose-personality/src/main.py
 ```
 
 3. In Goose Desktop:
-   - Open Settings (gear icon in top right)
-   - Go to the Extensions section
-   - Click "Add Extension"
-   - Select "From Directory"
-   - Choose the `goose-personality` directory you just cloned
+   - Open Settings
+   - Click "Add Custom Extension"
+   - Fill in the fields as follows:
+
+   ```
+   Type: Standard IO
+   ID: personality-customizer
+   Name: Personality Customizer
+   Description: Customize how Goose responds to you
+   Command: python3 /Users/sommer/goose-personality/src/main.py
+   Timeout: 30
+   ```
+
+   Note: Replace `/Users/sommer/goose-personality` with the actual path where you cloned the repository.
+
+   - Click "Add" to save the extension
 
 ## Usage
 
@@ -54,19 +65,19 @@ If you encounter installation issues:
 1. Check the logs at `/tmp/goose_personality.log`
 2. Ensure Python 3 is installed and accessible
 3. Verify the script has execute permissions
-4. Make sure the paths in `extension.yaml` match your installation directory
+4. Double-check the full path to the Python script in the Command field
+5. Make sure there are no extra spaces in the Command field
 
 ## Development
 
 The extension consists of:
-- `extension.yaml`: Extension configuration and tool definitions
 - `src/main.py`: Python script that handles the personality customization logic
-- `install.sh`: Helper script for installation
+- Logs are written to `/tmp/goose_personality.log` for debugging
 
 To modify the extension:
 1. Edit the Python script to add new functionality
-2. Update the `extension.yaml` to expose new tools
-3. Test locally before pushing changes
+2. Test locally before pushing changes
+3. If you make changes, you'll need to remove and re-add the extension in Goose settings
 
 ## License
 
