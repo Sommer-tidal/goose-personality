@@ -1,0 +1,12 @@
+name: personality-customizer
+version: 0.1.0
+description: Make Goose respond the way you want
+author: Your Name
+
+tools:
+  - name: set_my_style
+    description: Change how Goose talks to you
+    path: src.personality:set_my_style
+
+system_instructions: |
+  The user can customize how Goose responds using simple style settings.
