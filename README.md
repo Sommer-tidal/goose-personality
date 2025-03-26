@@ -10,50 +10,50 @@ cd ~
 git clone https://github.com/Sommer-tidal/goose-personality.git
 ```
 
-2. Find your username:
+2. Find your Python path:
 ```bash
-echo $USER
+which python3
 ```
-This will show your username (you'll need it in step 3)
+Note: It's typically `/Library/Developer/CommandLineTools/usr/bin/python3` on macOS
 
 3. In Goose:
    - Go to Settings → Extensions
    - Click "Add Custom Extension"
-   - Fill in these fields (replace USERNAME with your actual username from step 2):
+   - Fill in EXACTLY as shown (adjust paths if needed):
      - Type: Standard IO
      - ID: `personality-customizer`
      - Name: `Personality Customizer`
      - Description: `Customize Goose's personality and response style`
      - Command: `/Library/Developer/CommandLineTools/usr/bin/python3`
-     - Arguments: `/Users/USERNAME/goose-personality/src/main.py`
+     - Arguments: `/Users/YOUR_USERNAME/goose-personality/src/main.py`
      - Environment Variables: (leave empty)
      - Timeout: 300
 
-   For example, if your username is "john", the Arguments field would be:
-   `/Users/john/goose-personality/src/main.py`
+   Replace `YOUR_USERNAME` with your actual username.
 
 ## Troubleshooting
 
 ### Common Installation Issues
 
-1. **Wrong Username**
-   - The most common error is not replacing USERNAME with your actual username
-   - Run `echo $USER` in terminal to find your correct username
-   - The path must exactly match where you cloned the repository
+1. **Wrong Python Path**
+   - Run `which python3` in terminal to find your Python path
+   - Use that full path in the Command field
 
-2. **File Not Found**
-   - Make sure you cloned the repository to your home directory
+2. **Wrong Script Path**
+   - Make sure to replace YOUR_USERNAME with your actual username
    - Verify the file exists: `ls -l ~/goose-personality/src/main.py`
-   - If the file is missing, clone the repository again
+   - Use `echo $HOME` to find your home directory
 
-3. **Python Issues**
-   - The command path should work on most Macs
-   - If it doesn't, try finding your Python path: `which python3`
-   - Use that path in the Command field instead
+3. **Repository Issues**
+   - If files are missing, clone again:
+     ```bash
+     cd ~
+     rm -rf goose-personality
+     git clone https://github.com/Sommer-tidal/goose-personality.git
+     ```
 
 4. **Permission Issues**
    - Check file permissions: `ls -l ~/goose-personality/src/main.py`
    - Should show read permissions (r) for your user
-   - Try running: `chmod +r ~/goose-personality/src/main.py`
 
 [Rest of README remains the same...]
