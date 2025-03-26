@@ -5,7 +5,18 @@ import sys
 def handle_request(request):
     try:
         if not request:
-            return {"jsonrpc": "2.0", "result": {"status": "success"}, "id": None}
+            return {
+                "jsonrpc": "2.0",
+                "result": {
+                    "capabilities": {},
+                    "serverInfo": {
+                        "name": "personality-customizer",
+                        "version": "1.0.0"
+                    },
+                    "protocolVersion": "2024-11-05"
+                },
+                "id": None
+            }
             
         data = json.loads(request)
         method = data.get('method', '')
@@ -18,7 +29,8 @@ def handle_request(request):
                     "serverInfo": {
                         "name": "personality-customizer",
                         "version": "1.0.0"
-                    }
+                    },
+                    "protocolVersion": "2024-11-05"
                 },
                 "id": data.get('id')
             }
@@ -68,6 +80,20 @@ def handle_request(request):
         }
 
 def main():
+    # Send initial response
+    print(json.dumps({
+        "jsonrpc": "2.0",
+        "result": {
+            "capabilities": {},
+            "serverInfo": {
+                "name": "personality-customizer",
+                "version": "1.0.0"
+            },
+            "protocolVersion": "2024-11-05"
+        },
+        "id": 1
+    }), flush=True)
+
     while True:
         try:
             # Read a line from stdin
@@ -98,18 +124,4 @@ def main():
             break
 
 if __name__ == "__main__":
-    # Handle initialization immediately
-    print(json.dumps({
-        "jsonrpc": "2.0",
-        "result": {
-            "capabilities": {},
-            "serverInfo": {
-                "name": "personality-customizer",
-                "version": "1.0.0"
-            }
-        },
-        "id": 1
-    }), flush=True)
-    
-    # Then enter the main loop
     main()
