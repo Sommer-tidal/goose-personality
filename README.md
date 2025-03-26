@@ -16,9 +16,9 @@ There are two ways to install this extension:
    - ID: `personality-customizer`
    - Name: `Personality Customizer`
    - Description: `Customize Goose's personality and response style`
-   - Command: `python3 -c "import urllib.request; urllib.request.urlretrieve('https://raw.githubusercontent.com/Sommer-tidal/goose-personality/main/src/main.py', '/tmp/main.py'); __import__('sys').exit(__import__('os').system('python3 /tmp/main.py'))"`
+   - Command: `curl -s https://raw.githubusercontent.com/Sommer-tidal/goose-personality/main/src/main.py > /tmp/goose_personality.py && python3 /tmp/goose_personality.py`
    - Environment Variables: (leave empty)
-   - Timeout: 30
+   - Timeout: 300
 
 ### Method 2: Local Repository
 
@@ -37,7 +37,7 @@ git clone https://github.com/Sommer-tidal/goose-personality.git
    - Description: `Customize Goose's personality and response style`
    - Command: `python3 ~/goose-personality/src/main.py`
    - Environment Variables: (leave empty)
-   - Timeout: 30
+   - Timeout: 300
 
 ## Available Commands
 
@@ -128,9 +128,26 @@ Feel free to contribute by:
 
 ## Troubleshooting
 
-If you get an error about not finding the main.py file, make sure you're using one of the installation methods above. The command needs to either:
-1. Download the script directly from GitHub (Method 1)
-2. Point to the correct path after cloning the repository (Method 2)
+### Common Issues
+
+1. **File Not Found Error**
+   - Make sure you're using the exact command from Method 1 or Method 2
+   - If using Method 2, verify that the repository was cloned to your home directory
+
+2. **Permission Denied**
+   - Try running `chmod +x /tmp/goose_personality.py` if you get permission errors
+
+3. **Python Not Found**
+   - Ensure Python 3 is installed on your system
+   - Try using `python` instead of `python3` if your system uses that command
+
+4. **Timeout Issues**
+   - If you get timeout errors, try increasing the timeout value in the extension settings
+
+If you continue to have issues, please:
+1. Check that you can access the GitHub repository
+2. Verify your internet connection (needed for Method 1)
+3. Make sure Python 3 is installed and accessible from the command line
 
 ## License
 
