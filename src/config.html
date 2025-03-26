@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Personality Customizer</title>
+    <style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+            max-width: 800px;
+            margin: 20px auto;
+            padding: 20px;
+            background-color: #f5f5f5;
+        }
+        .container {
+            background-color: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        h1 {
+            color: #333;
+            margin-bottom: 20px;
+        }
+        .style-form {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+        .form-group {
+            display: flex;
+            flex-direction: column;
+            gap: 5px;
+        }
+        label {
+            font-weight: bold;
+            color: #555;
+        }
+        input[type="text"], textarea {
+            padding: 8px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            font-size: 14px;
+        }
+        textarea {
+            min-height: 100px;
+            resize: vertical;
+        }
+        .instructions {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+        .instruction-item {
+            display: flex;
+            gap: 10px;
+            align-items: center;
+        }
+        .remove-instruction {
+            color: red;
+            cursor: pointer;
+            font-weight: bold;
+        }
+        button {
+            padding: 10px 20px;
+            background-color: #007bff;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 14px;
+        }
+        button:hover {
+            background-color: #0056b3;
+        }
+        .add-instruction {
+            background-color: #28a745;
+        }
+        .existing-styles {
+            margin-top: 20px;
+            padding: 15px;
+            background-color: #f8f9fa;
+            border-radius: 4px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Personality Style Customizer</h1>
+        
+        <div class="style-form">
+            <div class="form-group">
+                <label for="styleName">Style Name:</label>
+                <input type="text" id="styleName" placeholder="e.g., technical-expert">
+            </div>
+            
+            <div class="form-group">
+                <label>Instructions:</label>
+                <div class="instructions" id="instructionsList">
+                    <div class="instruction-item">
+                        <input type="text" placeholder="Add an instruction">
+                        <span class="remove-instruction">×</span>
+                    </div>
+                </div>
+                <button type="button" class="add-instruction" onclick="addInstruction()">+ Add Instruction</button>
+            </div>
+            
+            <button type="button" onclick="saveStyle()">Save Style</button>
+        </div>
+
+        <div class="existing-styles">
+            <h2>Existing Styles</h2>
+            <div id="stylesList"></div>
+        </div>
+    </div>
+
+    <script>
+        function addInstruction() {
+            const instructionsList = document.getElementById('instructionsList');
+            const newInstruction = document.createElement('div');
+            newInstruction.className = 'instruction-item';
+            newInstruction.innerHTML = `
+                <input type="text" placeholder="Add an instruction">
+                <span class="remove-instruction" onclick="removeInstruction(this)">×</span>
+            `;
+            instructionsList.appendChild(newInstruction);
+        }
+
+        function removeInstruction(element) {
+            element.parentElement.remove();
+        }
+
+        function saveStyle() {
+            const styleName = document.getElementById('styleName').value;
+            const instructions = Array.from(document.querySelectorAll('.instruction-item input'))
+                .map(input => input.value)
+                .filter(value => value.trim() !== '');
+
+            const style = {
+                name: styleName,
+                instructions: instructions
+            };
+
+            // Send to Python backend
+            window.location.href = `goose://save-style?data=${encodeURIComponent(JSON.stringify(style))}`;
+        }
+
+        // Load existing styles
+        function loadStyles() {
+            fetch('goose://get-styles')
+                .then(response => response.json())
+                .then(styles => {
+                    const stylesList = document.getElementById('stylesList');
+                    stylesList.innerHTML = styles.map(style => `
+                        <div class="style-item">
+                            <h3>${style.name}</h3>
+                            <ul>
+                                ${style.instructions.map(inst => `<li>${inst}</li>`).join('')}
+                            </ul>
+                        </div>
+                    `).join('');
+                });
+        }
+
+        // Initialize
+        loadStyles();
+    </script>
+</body>
+</html>
