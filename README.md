@@ -1,6 +1,14 @@
 # Goose Personality Customizer
 
-A Goose extension that allows you to customize how Goose responds to you by setting different personality styles.
+A Goose extension that allows you to customize how Goose responds to you by creating and managing personality styles with custom instructions.
+
+## Features
+
+- Multiple built-in personality styles
+- Custom instructions for each style
+- Persistent storage between sessions
+- Detailed logging for troubleshooting
+- User-friendly command interface
 
 ## Installation
 
@@ -32,77 +40,107 @@ chmod +x goose-personality/src/main.py
 
 ## Available Commands
 
-Once installed, you can use:
-
-1. Get available styles:
+### View Available Styles
 ```
 /get_personality_styles
 ```
+Lists all available personality styles with their descriptions and status.
 
-2. Set a style:
+### View Style Details
+```
+/get_style_details friendly
+```
+Shows all instructions and settings for a specific style.
+
+### Set Active Style
 ```
 /set_style friendly
 ```
+Activates a specific personality style.
 
-Available styles:
-- friendly: Casual and approachable responses
-- professional: Formal and business-like responses
-- teacher: Educational and explanatory responses
-- concise: Brief and to-the-point responses
+### Add Instruction
+```
+/add_instruction friendly "Use more emojis in responses"
+```
+Adds a new instruction to a style.
+
+### Remove Instruction
+```
+/remove_instruction friendly friendly-1
+```
+Removes an instruction from a style (use the instruction ID from style details).
+
+### Toggle Instruction
+```
+/toggle_instruction friendly friendly-1
+```
+Enables or disables an instruction (use the instruction ID from style details).
+
+## Built-in Styles
+
+- **friendly**: Casual and approachable responses
+- **professional**: Formal and business-like responses
+- **teacher**: Educational and explanatory responses
+- **concise**: Brief and to-the-point responses
+
+## Storage and Persistence
+
+Your personality styles and instructions are stored in:
+```
+~/.config/goose/personality-customizer/config.json
+```
+
+## Logging
+
+Logs are written to:
+```
+/tmp/goose_personality.log
+```
 
 ## Troubleshooting
 
-If you get installation errors:
+If you encounter issues:
 
-1. Double-check the path in the Command field matches your clone location
-2. Make sure the script is executable (chmod +x)
-3. Verify Python 3 is installed and in your PATH
-4. Check the logs at `/tmp/goose_personality.log` if available
+1. Check the logs at `/tmp/goose_personality.log`
+2. Verify the config directory exists: `~/.config/goose/personality-customizer`
+3. Make sure the script is executable
+4. Check that Python 3 is installed
 
 ## Technical Details
 
-The extension implements the Model Context Protocol (MCP) with JSON-RPC 2.0:
+The extension implements:
+- JSON-RPC 2.0 protocol
+- Persistent storage using JSON
+- Structured logging
+- Error handling with detailed messages
 
-### Initialization Response
-```json
-{
-    "jsonrpc": "2.0",
-    "result": {
-        "capabilities": {},
-        "serverInfo": {
-            "name": "personality-customizer",
-            "version": "1.0.0"
-        },
-        "protocolVersion": "2024-11-05"
-    },
-    "id": 1
-}
-```
+### Data Structure
 
-### Command Response Format
-```json
-{
-    "jsonrpc": "2.0",
-    "result": {
-        "status": "success",
-        "data": {...}
-    },
-    "id": 1
-}
-```
+Each style contains:
+- Name
+- Description
+- List of instructions
+- Active status
+
+Each instruction has:
+- Unique ID
+- Text content
+- Creation timestamp
+- Enabled status
 
 ## Development
 
-The extension uses:
-- Python 3 for the implementation
-- JSON-RPC 2.0 protocol for Goose communication
-- Standard IO for data transfer
-- MCP (Model Context Protocol) for extension integration
-
-To modify:
+To modify the extension:
 1. Edit `src/main.py`
-2. Test locally
-3. Remove and re-add in Goose to test changes
+2. Test changes locally
+3. Remove and re-add in Goose to test
+
+### Adding New Features
+
+To add new functionality:
+1. Add new methods to `PersonalityManager` class
+2. Add corresponding handlers in `PersonalityCustomizer.handle_request()`
+3. Update the config save/load methods if needed
 
 ## License
 
