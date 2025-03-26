@@ -19,13 +19,13 @@ git clone https://github.com/Sommer-tidal/goose-personality.git
      - Name: `Personality Customizer`
      - Description: `Customize Goose's personality and response style`
      - Command: `/Library/Developer/CommandLineTools/usr/bin/python3`
-     - Arguments: `/Users/YOURUSERNAME/goose-personality/src/main.py --init`
+     - Arguments: `/Users/YOURUSERNAME/goose-personality/src/main.py`
      - Environment Variables: (leave empty)
      - Timeout: 30
 
    **Important**: Replace `YOURUSERNAME` with your actual username.
    For example, if your username is "john", the Arguments field would be:
-   `/Users/john/goose-personality/src/main.py --init`
+   `/Users/john/goose-personality/src/main.py`
 
 ## Available Commands
 
@@ -75,10 +75,6 @@ Currently supports four basic styles:
    - Check file permissions: `ls -l ~/goose-personality/src/main.py`
    - Should show read permissions (r) for your user
    - Try running: `chmod +r ~/goose-personality/src/main.py`
-
-5. **Initialization Issues**
-   - Make sure to include the `--init` flag in the Arguments field
-   - If you get timeout errors, try removing and adding the extension again
 
 ## Current Status
 
