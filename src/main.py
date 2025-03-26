@@ -5,6 +5,7 @@ import os
 import http.server
 import webbrowser
 from urllib.parse import urlparse, parse_qs
+import time
 
 # Store custom styles in a JSON file
 STYLES_FILE = os.path.join(os.path.dirname(__file__), 'custom_styles.json')
@@ -45,12 +46,19 @@ class ConfigHandler(http.server.SimpleHTTPRequestHandler):
             self.wfile.write(f.read())
 
 def handle_request():
+    # Add a small delay to allow Goose to set up
+    time.sleep(1)
+    
     try:
+        # Print debug info to stderr
+        print("Reading from stdin...", file=sys.stderr)
         input_data = json.loads(sys.stdin.read())
+        print(f"Received command: {input_data.get('command', 'none')}", file=sys.stderr)
+        
         command = input_data.get('command', '')
         params = input_data.get('params', {})
         
-        if command == 'customize_personality':  # Changed from 'configure'
+        if command == 'customize_personality':
             # Start the configuration server
             port = 8000
             server = http.server.HTTPServer(('localhost', port), ConfigHandler)
@@ -72,14 +80,14 @@ def handle_request():
                 print(json.dumps(memory_cmd))
             return result
             
-        elif command == 'get_personality_styles':  # Changed from 'get_styles'
+        elif command == 'get_personality_styles':
             return get_available_styles()
             
         else:
-            return {"error": "Unknown command"}
+            return {"error": f"Unknown command: {command}"}
             
     except Exception as e:
-        return {"error": str(e)}
+        return {"error": f"Error: {str(e)}"}
 
 def set_style(style):
     # Built-in styles
@@ -140,5 +148,11 @@ def get_available_styles():
     }
 
 if __name__ == "__main__":
-    result = handle_request()
-    print(json.dumps(result))
+    try:
+        print("Starting personality customizer...", file=sys.stderr)
+        result = handle_request()
+        print(json.dumps(result), flush=True)
+        print("Request handled successfully", file=sys.stderr)
+    except Exception as e:
+        print(f"Fatal error: {str(e)}", file=sys.stderr)
+        sys.exit(1)
