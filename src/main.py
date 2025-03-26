@@ -10,8 +10,6 @@ import webbrowser
 import threading
 import socket
 from typing import Dict, List, Optional
-import pkg_resources
-import base64
 
 # Set up logging
 logging.basicConfig(
@@ -564,7 +562,14 @@ class PersonalityCustomizer:
         try:
             if not request:
                 return self._create_response({
-                    "capabilities": {},
+                    "capabilities": {
+                        "commands": [
+                            {
+                                "name": "edit_personality",
+                                "description": "Open the personality customization interface"
+                            }
+                        ]
+                    },
                     "serverInfo": {
                         "name": "personality-customizer",
                         "version": "1.0.0"
@@ -578,7 +583,14 @@ class PersonalityCustomizer:
 
             if method == 'initialize':
                 return self._create_response({
-                    "capabilities": {},
+                    "capabilities": {
+                        "commands": [
+                            {
+                                "name": "edit_personality",
+                                "description": "Open the personality customization interface"
+                            }
+                        ]
+                    },
                     "serverInfo": {
                         "name": "personality-customizer",
                         "version": "1.0.0"
