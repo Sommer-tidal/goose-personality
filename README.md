@@ -1,14 +1,14 @@
 # Goose Personality Customizer
 
-A Goose extension that allows you to customize how Goose responds to you by creating and managing personality styles with custom instructions.
+A Goose extension that allows you to customize how Goose responds to you using a friendly web interface.
 
 ## Features
 
+- Easy-to-use web interface for managing personality styles
 - Multiple built-in personality styles
 - Custom instructions for each style
 - Persistent storage between sessions
-- Detailed logging for troubleshooting
-- User-friendly command interface
+- Real-time updates
 
 ## Installation
 
@@ -38,63 +38,36 @@ chmod +x goose-personality/src/main.py
 
    ⚠️ IMPORTANT: In the Command field above, replace `/Users/sommer` with your own home directory path where you cloned the repository.
 
-## Available Commands
+## Usage
 
-### View Available Styles
+1. In Goose, type:
 ```
-/get_personality_styles
+/edit_personality
 ```
-Lists all available personality styles with their descriptions and status.
 
-### View Style Details
-```
-/get_style_details friendly
-```
-Shows all instructions and settings for a specific style.
+2. This will open a web interface in your browser where you can:
+   - View all personality styles
+   - Add new styles
+   - Edit existing styles
+   - Add/remove instructions
+   - Enable/disable styles
+   - Delete styles
 
-### Set Active Style
-```
-/set_style friendly
-```
-Activates a specific personality style.
-
-### Add Instruction
-```
-/add_instruction friendly "Use more emojis in responses"
-```
-Adds a new instruction to a style.
-
-### Remove Instruction
-```
-/remove_instruction friendly friendly-1
-```
-Removes an instruction from a style (use the instruction ID from style details).
-
-### Toggle Instruction
-```
-/toggle_instruction friendly friendly-1
-```
-Enables or disables an instruction (use the instruction ID from style details).
+The interface is intuitive and easy to use - just click the buttons and fill in the forms!
 
 ## Built-in Styles
 
+The extension comes with some pre-configured styles:
 - **friendly**: Casual and approachable responses
 - **professional**: Formal and business-like responses
-- **teacher**: Educational and explanatory responses
-- **concise**: Brief and to-the-point responses
 
-## Storage and Persistence
+You can modify these or add your own through the web interface.
 
-Your personality styles and instructions are stored in:
+## Storage
+
+Your personality styles and instructions are automatically saved to:
 ```
 ~/.config/goose/personality-customizer/config.json
-```
-
-## Logging
-
-Logs are written to:
-```
-/tmp/goose_personality.log
 ```
 
 ## Troubleshooting
@@ -102,45 +75,19 @@ Logs are written to:
 If you encounter issues:
 
 1. Check the logs at `/tmp/goose_personality.log`
-2. Verify the config directory exists: `~/.config/goose/personality-customizer`
-3. Make sure the script is executable
-4. Check that Python 3 is installed
-
-## Technical Details
-
-The extension implements:
-- JSON-RPC 2.0 protocol
-- Persistent storage using JSON
-- Structured logging
-- Error handling with detailed messages
-
-### Data Structure
-
-Each style contains:
-- Name
-- Description
-- List of instructions
-- Active status
-
-Each instruction has:
-- Unique ID
-- Text content
-- Creation timestamp
-- Enabled status
+2. Make sure you have Python 3 installed
+3. Verify the script is executable
+4. Check that no other program is using the web interface port
+5. Try restarting Goose
 
 ## Development
 
-To modify the extension:
-1. Edit `src/main.py`
-2. Test changes locally
-3. Remove and re-add in Goose to test
-
-### Adding New Features
-
-To add new functionality:
-1. Add new methods to `PersonalityManager` class
-2. Add corresponding handlers in `PersonalityCustomizer.handle_request()`
-3. Update the config save/load methods if needed
+The extension includes:
+- Python backend with web server
+- Modern web interface with JavaScript
+- JSON storage for persistence
+- Real-time updates
+- Error handling and logging
 
 ## License
 
