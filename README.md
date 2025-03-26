@@ -2,13 +2,6 @@
 
 A Goose extension that allows you to customize how Goose responds to you by setting different personality styles.
 
-## Features
-
-- Multiple personality styles: friendly, professional, teacher, and concise
-- Easy to switch between styles
-- JSON-RPC protocol support for reliable communication
-- Proper error handling and logging
-
 ## Installation
 
 1. Clone this repository:
@@ -37,11 +30,9 @@ chmod +x goose-personality/src/main.py
 
    ⚠️ IMPORTANT: In the Command field above, replace `/Users/sommer` with your own home directory path where you cloned the repository.
 
-   - Click "Add" to save the extension
+## Available Commands
 
-## Usage
-
-Once installed, you can use the following commands:
+Once installed, you can use:
 
 1. Get available styles:
 ```
@@ -61,18 +52,18 @@ Available styles:
 
 ## Troubleshooting
 
-If you encounter installation issues:
+If you get installation errors:
 
-1. Make sure you copied the Command field exactly as shown, replacing only the username part of the path
-2. Check that the path in the Command field matches where you cloned the repository
-3. Ensure Python 3 is installed and accessible
-4. Verify the script has execute permissions (chmod +x)
+1. Double-check the path in the Command field matches your clone location
+2. Make sure the script is executable (chmod +x)
+3. Verify Python 3 is installed and in your PATH
+4. Check the logs at `/tmp/goose_personality.log` if available
 
 ## Technical Details
 
-The extension uses JSON-RPC 2.0 protocol for communication with Goose:
+The extension implements the Model Context Protocol (MCP) with JSON-RPC 2.0:
 
-- Initialization Response Format:
+### Initialization Response
 ```json
 {
     "jsonrpc": "2.0",
@@ -81,13 +72,14 @@ The extension uses JSON-RPC 2.0 protocol for communication with Goose:
         "serverInfo": {
             "name": "personality-customizer",
             "version": "1.0.0"
-        }
+        },
+        "protocolVersion": "2024-11-05"
     },
     "id": 1
 }
 ```
 
-- Command Response Format:
+### Command Response Format
 ```json
 {
     "jsonrpc": "2.0",
@@ -101,17 +93,16 @@ The extension uses JSON-RPC 2.0 protocol for communication with Goose:
 
 ## Development
 
-The extension consists of:
-- `src/main.py`: Python script that handles:
-  - JSON-RPC protocol
-  - Personality style management
-  - Command processing
-  - Error handling
+The extension uses:
+- Python 3 for the implementation
+- JSON-RPC 2.0 protocol for Goose communication
+- Standard IO for data transfer
+- MCP (Model Context Protocol) for extension integration
 
-To modify the extension:
-1. Edit the Python script to add new functionality
-2. Test locally before pushing changes
-3. If you make changes, you'll need to remove and re-add the extension in Goose settings
+To modify:
+1. Edit `src/main.py`
+2. Test locally
+3. Remove and re-add in Goose to test changes
 
 ## License
 
