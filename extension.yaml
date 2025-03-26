@@ -3,10 +3,21 @@ version: 0.1.0
 description: Make Goose respond the way you want
 author: Your Name
 
+command:
+  program: python3
+  args: ["/Users/sommer/goose-personality/src/main.py"]
+
 tools:
-  - name: set_my_style
-    description: Change how Goose talks to you
-    path: src.personality:set_my_style
+  - name: get_personality_styles
+    description: Get available personality styles
+  - name: set_style
+    description: Set the personality style
+    parameters:
+      style:
+        type: string
+        description: The style to set (friendly, professional, teacher, or concise)
+        required: true
 
 system_instructions: |
   The user can customize how Goose responds using simple style settings.
+  Available styles are: friendly, professional, teacher, and concise.
