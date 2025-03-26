@@ -5,7 +5,6 @@ import os
 import http.server
 import webbrowser
 from urllib.parse import urlparse, parse_qs
-import time
 
 # Store custom styles in a JSON file
 STYLES_FILE = os.path.join(os.path.dirname(__file__), 'custom_styles.json')
@@ -24,7 +23,6 @@ class ConfigHandler(http.server.SimpleHTTPRequestHandler):
     def do_GET(self):
         parsed_path = urlparse(self.path)
         if parsed_path.path == '/save-style':
-            # Handle saving new style
             query = parse_qs(parsed_path.query)
             if 'data' in query:
                 style_data = json.loads(query['data'][0])
@@ -38,7 +36,6 @@ class ConfigHandler(http.server.SimpleHTTPRequestHandler):
                 self.wfile.write(b"Style saved successfully")
             return
         
-        # Serve the config.html file
         self.send_response(200)
         self.send_header('Content-type', 'text/html')
         self.end_headers()
@@ -46,51 +43,51 @@ class ConfigHandler(http.server.SimpleHTTPRequestHandler):
             self.wfile.write(f.read())
 
 def handle_request():
-    # Add a small delay to allow Goose to set up
-    time.sleep(1)
-    
     try:
-        # Print debug info to stderr
-        print("Reading from stdin...", file=sys.stderr)
-        input_data = json.loads(sys.stdin.read())
-        print(f"Received command: {input_data.get('command', 'none')}", file=sys.stderr)
-        
-        command = input_data.get('command', '')
-        params = input_data.get('params', {})
-        
-        if command == 'customize_personality':
-            # Start the configuration server
-            port = 8000
-            server = http.server.HTTPServer(('localhost', port), ConfigHandler)
-            webbrowser.open(f'http://localhost:{port}')
-            server.handle_request()  # Handle one request then close
-            return {"status": "personality_customization_complete"}
+        # Quick initialization response
+        if not sys.stdin.isatty():
+            first_char = sys.stdin.read(1)
+            if not first_char:
+                # This is the initialization call
+                print(json.dumps({"status": "initialized"}), flush=True)
+                return
             
-        elif command == 'set_style':
-            style = params.get('style', 'default')
-            result = set_style(style)
-            if 'error' not in result:
-                memory_cmd = {
-                    "command": "remember_memory",
-                    "category": "personality",
-                    "data": f"preferred_style: {style}",
-                    "tags": ["style", "personality"],
-                    "is_global": True
-                }
-                print(json.dumps(memory_cmd))
-            return result
+            # Normal command processing
+            input_data = json.loads(first_char + sys.stdin.read())
+            command = input_data.get('command', '')
+            params = input_data.get('params', {})
             
-        elif command == 'get_personality_styles':
-            return get_available_styles()
-            
-        else:
-            return {"error": f"Unknown command: {command}"}
-            
+            if command == 'customize_personality':
+                port = 8000
+                server = http.server.HTTPServer(('localhost', port), ConfigHandler)
+                webbrowser.open(f'http://localhost:{port}')
+                server.handle_request()
+                return {"status": "personality_customization_complete"}
+                
+            elif command == 'set_style':
+                style = params.get('style', 'default')
+                result = set_style(style)
+                if 'error' not in result:
+                    memory_cmd = {
+                        "command": "remember_memory",
+                        "category": "personality",
+                        "data": f"preferred_style: {style}",
+                        "tags": ["style", "personality"],
+                        "is_global": True
+                    }
+                    print(json.dumps(memory_cmd))
+                return result
+                
+            elif command == 'get_personality_styles':
+                return get_available_styles()
+                
+            else:
+                return {"error": f"Unknown command: {command}"}
+                
     except Exception as e:
         return {"error": f"Error: {str(e)}"}
 
 def set_style(style):
-    # Built-in styles
     styles = {
         'friendly': {
             'instructions': """
@@ -126,7 +123,6 @@ def set_style(style):
         }
     }
     
-    # Add custom styles
     custom_styles = load_custom_styles()
     styles.update(custom_styles)
     
@@ -148,11 +144,6 @@ def get_available_styles():
     }
 
 if __name__ == "__main__":
-    try:
-        print("Starting personality customizer...", file=sys.stderr)
-        result = handle_request()
+    result = handle_request()
+    if result:
         print(json.dumps(result), flush=True)
-        print("Request handled successfully", file=sys.stderr)
-    except Exception as e:
-        print(f"Fatal error: {str(e)}", file=sys.stderr)
-        sys.exit(1)
