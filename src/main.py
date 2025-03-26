@@ -50,13 +50,13 @@ def handle_request():
         command = input_data.get('command', '')
         params = input_data.get('params', {})
         
-        if command == 'configure':
+        if command == 'customize_personality':  # Changed from 'configure'
             # Start the configuration server
             port = 8000
             server = http.server.HTTPServer(('localhost', port), ConfigHandler)
             webbrowser.open(f'http://localhost:{port}')
             server.handle_request()  # Handle one request then close
-            return {"status": "configuration_complete"}
+            return {"status": "personality_customization_complete"}
             
         elif command == 'set_style':
             style = params.get('style', 'default')
@@ -72,7 +72,7 @@ def handle_request():
                 print(json.dumps(memory_cmd))
             return result
             
-        elif command == 'get_styles':
+        elif command == 'get_personality_styles':  # Changed from 'get_styles'
             return get_available_styles()
             
         else:
