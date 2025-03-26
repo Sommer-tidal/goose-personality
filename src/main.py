@@ -11,7 +11,18 @@ def handle_request():
         
         if command == 'set_style':
             style = params.get('style', 'default')
-            return set_style(style)
+            result = set_style(style)
+            # Print memory command to store the style preference
+            if 'error' not in result:
+                memory_cmd = {
+                    "command": "remember_memory",
+                    "category": "personality",
+                    "data": f"preferred_style: {style}",
+                    "tags": ["style", "personality"],
+                    "is_global": True
+                }
+                print(json.dumps(memory_cmd))
+            return result
         elif command == 'get_styles':
             return get_available_styles()
         else:
