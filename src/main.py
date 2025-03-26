@@ -3,11 +3,7 @@ import sys
 import json
 
 def handle_request():
-    # Immediate initialization response
-    if len(sys.argv) > 1 and sys.argv[1] == "--init":
-        return {"status": "initialized"}
-    
-    # Read command from stdin
+    # Read from stdin
     try:
         input_data = json.loads(sys.stdin.read())
         command = input_data.get('command', '')
@@ -19,6 +15,9 @@ def handle_request():
             return {"status": f"Style set to {style}"}
         else:
             return {"error": f"Unknown command: {command}"}
+    except json.JSONDecodeError:
+        # This is probably the initialization call
+        return {"status": "initialized"}
     except Exception as e:
         return {"error": str(e)}
 
