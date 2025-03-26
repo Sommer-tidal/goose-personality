@@ -2,6 +2,43 @@
 
 A customizable extension for modifying Goose's personality and response style. This extension allows you to switch between predefined styles or create your own custom personality styles through a web interface.
 
+## Installation
+
+There are two ways to install this extension:
+
+### Method 1: Direct Installation (Recommended)
+
+1. Open Goose
+2. Go to Settings → Extensions
+3. Click "Add Custom Extension"
+4. Fill in:
+   - Type: Standard IO
+   - ID: `personality-customizer`
+   - Name: `Personality Customizer`
+   - Description: `Customize Goose's personality and response style`
+   - Command: `python3 -c "import urllib.request; urllib.request.urlretrieve('https://raw.githubusercontent.com/Sommer-tidal/goose-personality/main/src/main.py', '/tmp/main.py'); __import__('sys').exit(__import__('os').system('python3 /tmp/main.py'))"`
+   - Environment Variables: (leave empty)
+   - Timeout: 30
+
+### Method 2: Local Repository
+
+1. Clone the repository:
+```bash
+cd ~
+git clone https://github.com/Sommer-tidal/goose-personality.git
+```
+
+2. In Goose, go to Settings → Extensions
+3. Click "Add Custom Extension"
+4. Fill in:
+   - Type: Standard IO
+   - ID: `personality-customizer`
+   - Name: `Personality Customizer`
+   - Description: `Customize Goose's personality and response style`
+   - Command: `python3 ~/goose-personality/src/main.py`
+   - Environment Variables: (leave empty)
+   - Timeout: 30
+
 ## Available Commands
 
 ### 1. Get Available Styles
@@ -54,18 +91,6 @@ Opens a web interface where you can:
    - Key information only
    - Minimal examples
 
-## Installation
-
-1. Open Goose
-2. Go to Settings → Extensions
-3. Click "Add Custom Extension"
-4. Fill in:
-   - Type: Standard IO
-   - ID: `personality-customizer`
-   - Name: `Personality Customizer`
-   - Description: `Customize Goose's personality and response style`
-   - Command: `python3 src/main.py`
-
 ## Features
 
 - **Style Persistence**: Your style preferences are saved using Goose's memory extension
@@ -100,6 +125,12 @@ Feel free to contribute by:
 2. Suggesting improvements
 3. Reporting issues
 4. Submitting pull requests
+
+## Troubleshooting
+
+If you get an error about not finding the main.py file, make sure you're using one of the installation methods above. The command needs to either:
+1. Download the script directly from GitHub (Method 1)
+2. Point to the correct path after cloning the repository (Method 2)
 
 ## License
 
