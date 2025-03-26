@@ -23,18 +23,18 @@ chmod +x goose-personality/src/main.py
 3. In Goose Desktop:
    - Open Settings
    - Click "Add Custom Extension"
-   - Fill in the fields as follows:
+   - Fill in the fields EXACTLY as shown below:
 
    ```
    Type: Standard IO
    ID: personality-customizer
    Name: Personality Customizer
    Description: Customize how Goose responds to you
-   Command: python3 /Users/sommer/goose-personality/src/main.py
+   Command: python3 /Users/sommer/goose-personality/src/main.py --initialize
    Timeout: 30
    ```
 
-   Note: Replace `/Users/sommer/goose-personality` with the actual path where you cloned the repository.
+   ⚠️ IMPORTANT: In the Command field above, replace `/Users/sommer` with your own home directory path where you cloned the repository.
 
    - Click "Add" to save the extension
 
@@ -62,11 +62,11 @@ Available styles:
 
 If you encounter installation issues:
 
-1. Check the logs at `/tmp/goose_personality.log`
-2. Ensure Python 3 is installed and accessible
-3. Verify the script has execute permissions
-4. Double-check the full path to the Python script in the Command field
-5. Make sure there are no extra spaces in the Command field
+1. Make sure you copied the Command field exactly as shown, including the `--initialize` at the end
+2. Check that the path in the Command field matches where you cloned the repository
+3. Ensure Python 3 is installed and accessible
+4. Verify the script has execute permissions
+5. If it still doesn't work, check the logs at `/tmp/goose_personality.log`
 
 ## Development
 
