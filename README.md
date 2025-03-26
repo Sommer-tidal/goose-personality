@@ -6,7 +6,8 @@ A Goose extension that allows you to customize how Goose responds to you by sett
 
 - Multiple personality styles: friendly, professional, teacher, and concise
 - Easy to switch between styles
-- Customizable responses
+- JSON-RPC protocol support for reliable communication
+- Proper error handling and logging
 
 ## Installation
 
@@ -30,7 +31,7 @@ chmod +x goose-personality/src/main.py
    ID: personality-customizer
    Name: Personality Customizer
    Description: Customize how Goose responds to you
-   Command: python3 /Users/sommer/goose-personality/src/main.py --initialize
+   Command: python3 /Users/sommer/goose-personality/src/main.py
    Timeout: 30
    ```
 
@@ -62,17 +63,50 @@ Available styles:
 
 If you encounter installation issues:
 
-1. Make sure you copied the Command field exactly as shown, including the `--initialize` at the end
+1. Make sure you copied the Command field exactly as shown, replacing only the username part of the path
 2. Check that the path in the Command field matches where you cloned the repository
 3. Ensure Python 3 is installed and accessible
-4. Verify the script has execute permissions
-5. If it still doesn't work, check the logs at `/tmp/goose_personality.log`
+4. Verify the script has execute permissions (chmod +x)
+
+## Technical Details
+
+The extension uses JSON-RPC 2.0 protocol for communication with Goose:
+
+- Initialization Response Format:
+```json
+{
+    "jsonrpc": "2.0",
+    "result": {
+        "capabilities": {},
+        "serverInfo": {
+            "name": "personality-customizer",
+            "version": "1.0.0"
+        }
+    },
+    "id": 1
+}
+```
+
+- Command Response Format:
+```json
+{
+    "jsonrpc": "2.0",
+    "result": {
+        "status": "success",
+        "data": {...}
+    },
+    "id": 1
+}
+```
 
 ## Development
 
 The extension consists of:
-- `src/main.py`: Python script that handles the personality customization logic
-- Logs are written to `/tmp/goose_personality.log` for debugging
+- `src/main.py`: Python script that handles:
+  - JSON-RPC protocol
+  - Personality style management
+  - Command processing
+  - Error handling
 
 To modify the extension:
 1. Edit the Python script to add new functionality
