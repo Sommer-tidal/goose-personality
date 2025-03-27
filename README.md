@@ -1,14 +1,14 @@
 # Goose Personality Customizer
 
-A Goose extension that allows you to customize how Goose responds to you using a friendly web interface.
+A Goose extension that allows you to customize how Goose responds to you using a simple web interface.
 
 ## Features
 
-- Easy-to-use web interface for managing personality styles
-- Multiple built-in personality styles
-- Custom instructions for each style
-- Persistent storage between sessions
-- Real-time updates
+- Visual web interface for managing personality styles
+- Built-in personality styles (Friendly and Professional)
+- Customize instructions for each style
+- Changes persist between sessions
+- Real-time preview of personality settings
 
 ## Installation
 
@@ -40,54 +40,49 @@ chmod +x goose-personality/src/main.py
 
 ## Usage
 
-1. In Goose, type:
+1. In this chat window, type:
 ```
 /edit_personality
 ```
 
 2. This will open a web interface in your browser where you can:
-   - View all personality styles
-   - Add new styles
-   - Edit existing styles
-   - Add/remove instructions
-   - Enable/disable styles
-   - Delete styles
+   - View current personality styles
+   - See instructions for each style
+   - Edit instructions (coming soon)
+   - Add new styles (coming soon)
 
-The interface is intuitive and easy to use - just click the buttons and fill in the forms!
+## Current Status
 
-## Built-in Styles
-
-The extension comes with some pre-configured styles:
-- **friendly**: Casual and approachable responses
-- **professional**: Formal and business-like responses
-
-You can modify these or add your own through the web interface.
-
-## Storage
-
-Your personality styles and instructions are automatically saved to:
-```
-~/.config/goose/personality-customizer/config.json
-```
+The extension is currently in preview mode with:
+- Basic web interface
+- Two default styles (Friendly and Professional)
+- View-only functionality
+- Full editing capabilities coming soon
 
 ## Troubleshooting
 
 If you encounter issues:
 
 1. Check the logs at `/tmp/goose_personality.log`
-2. Make sure you have Python 3 installed
-3. Verify the script is executable
-4. Check that no other program is using the web interface port
-5. Try restarting Goose
+2. Make sure no other program is using port 8765
+3. Try quitting and restarting Goose
+4. Verify Python 3 is installed
 
 ## Development
 
 The extension includes:
-- Python backend with web server
-- Modern web interface with JavaScript
-- JSON storage for persistence
-- Real-time updates
-- Error handling and logging
+- Simple HTTP server for the web interface
+- JSON-RPC protocol for Goose communication
+- Detailed logging for debugging
+- Clean, modern web interface
+
+## Coming Soon
+
+- Ability to edit instructions
+- Add/remove personality styles
+- Save changes between sessions
+- Integration with memory extension
+- More customization options
 
 ## License
 
